@@ -1,0 +1,12 @@
+# IDE files
+*.idea
+*.iml
+
+# config files
+*.properties
+
+#target folder
+target/
+
+#log files
+*.log
