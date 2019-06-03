@@ -14,93 +14,96 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CheckAdvertisementWebSteps extends TestBase {
-    public AdPage ap;
+    public AdPage page;
     private Set<String> ads = new HashSet<String>();
 
     @Given("Web page \"([^\"]*)\"")
     public void openTargetUrl(String targetUrl) throws IOException {
         init();
-        ap = new AdPage(driver);
-        ap.openWebPage(targetUrl);
+        page = new AdPage(driver);
+        page.openWebPage(targetUrl);
     }
 
     @And("I see that Memo section is empty")
     public void seeMemoSectionIsEmpty() {
-        ap.seeMemoCounter(getAdCount());
-        ap.seeMemoSection(getAdCount());
+        int adCount = getAdCount();
+        page.seeMemoCounter(adCount);
+        page.seeMemoSection(adCount);
     }
 
     @Then("I open first ad in section \"([^\"]*)\"")
     public void openAd(String sectionName) {
         driver.navigate().back();
-        ap.openSection(sectionName);
-        ap.openFirstAdEntry();
+        page.openSection(sectionName);
+        page.openFirstAdEntry();
     }
 
     @And("I see a link \"Add to favorites\"")
     public void seeFavoritesLink() {
-        ap.seeAddToFavoritesLink();
+        page.seeAddToFavoritesLink();
     }
 
     @Then("I add an ad to favorites")
     public void addAnAdvertisementToFavorites() {
-        ap.addAdToMemoFromOpenEntry();
-        ads.addAll(ap.getAddedAds());
+        page.addAdToMemoFromOpenEntry();
+        ads.addAll(page.getAddedAds());
     }
 
     @Then("I see success alert")
     public void seeAlertMessage() {
-        ap.seeSuccessMessage();
-        ap.closeSuccessMessage();
+        page.seeSuccessMessage();
+        page.closeSuccessMessage();
     }
 
     @And("I see \"Memo\" section contain added ad URL")
     public void seeMemoSectionIsNotEmpty() {
-        ap.seeMemoCounter(getAdCount());
-        ap.seeMemoSection(getAdCount());
-        ap.seeMemoContainAd(ads);
+        int adCount = getAdCount();
+        page.seeMemoCounter(adCount);
+        page.seeMemoSection(adCount);
+        page.seeMemoContainAd(ads);
     }
 
     @When("I try to add the same ad")
     public void addTheSameAd() {
         for (String i : ads) {
-            ap.addSameAd(i);
+            page.addSameAdToMemoAgain(i); // For testing that adding the same ad does not add a duplicate
             break;
         }
 
-        ap.seeSuccessMessage();
-        ap.closeSuccessMessage();
+        page.seeSuccessMessage();
+        page.closeSuccessMessage();
     }
 
     @Then("I see no changes")
     public void seeNoChanges() {
-        ap.seeMemoCounter(getAdCount());
-        ap.seeMemoSection(getAdCount());
-        ap.seeMemoContainAd(ads);
+        int adCount = getAdCount();
+        page.seeMemoCounter(adCount);
+        page.seeMemoSection(adCount);
+        page.seeMemoContainAd(ads);
     }
 
     @Given("Search section \"([^\"]*)\"")
     public void openSearchSection(String url) {
-        ap.openWebPage(url);
+        page.openWebPage(url);
     }
 
     @When("I search for \"([^\"]*)\"")
     public void searchValue(String value) {
-        ap.searchForValue(value);
+        page.searchForValue(value);
     }
 
     @And("I add (\\d+) more ads")
     public void addAdsFromSearchSection(int count) {
-        ap.addAdsToMemoFromSearch(count);
-        ap.seeAddToFavoritesLink();
-        ads.addAll(ap.getAddedAds());
-        ap.seeSuccessMessage();
-        ap.closeSuccessMessage();
+        page.addAdsToMemoFromSearch(count);
+        page.seeAddToFavoritesLink();
+        ads.addAll(page.getAddedAds());
+        page.seeSuccessMessage();
+        page.closeSuccessMessage();
     }
 
     @When("I delete all ads from Memo")
     public void removeAllAdsFromMemo() {
-        ap.deleteAllAds();
+        page.deleteAllAds();
         ads.clear();
     }
 

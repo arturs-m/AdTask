@@ -32,7 +32,6 @@ public class AdPage extends BasePage {
     public static final String SEARCH_SECTION_MAIN_TEXT_FIELD_SELECTOR = "form table tbody tr:nth-of-type(2) input";
     public static final String REMOVE_ADS_FROM_MEMO_LINK_SELECTOR = "div.d12:nth-of-type(4) a";
 
-
     // Texts
     public static final String WEB_PAGE_IS_NOT_OPENED_TEXT = "Web page is not opened!";
     public static final String PAGE_IS_OPENED = "%s is opened!";
@@ -265,7 +264,7 @@ public class AdPage extends BasePage {
     /**
      * @param adUrl
      */
-    public void addSameAd(String adUrl) {
+    public void addSameAdToMemoAgain(String adUrl) {
         driver.get(adUrl);
         seeAddToFavoritesLink();
         addAdToMemoFromOpenEntry();

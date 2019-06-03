@@ -16,4 +16,3 @@ Feature: Check advertisement web
     Then I see "Memo" section contain added ad URL
     When I delete all ads from Memo
     Then I see that Memo section is empty
-    

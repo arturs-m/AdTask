@@ -32,13 +32,13 @@ public class TestBase {
 
     private void launchChrome(boolean options) {
         if (options) {
-            driver = new ChromeDriver(/*desiredCapabilities*/);
+            driver = new ChromeDriver();
         } else {
             driver = new ChromeDriver();
         }
     }
 
-    protected void init(Object... args) throws IOException {
+    protected void init() throws IOException {
         getProperties();
         setChromeDriverLocationProperty();
         target = new TestRunner();
